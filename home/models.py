@@ -43,3 +43,8 @@ class Customer(models.Model):
     def __str___(self):
         return self.firstname + " " + self.last_name
 
+
+class Order(models.Model):
+    order_date = models.DateTimeField("Order Date")
+    special_instruction = models.CharField("Special Instruction", max_length=256)
+    products = models.ManyToManyField(Product)
