@@ -45,6 +45,9 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
-    order_date = models.DateTimeField("Order Date")
+    order_date = models.DateTimeField("Order Date", auto_now_add=True)
     special_instruction = models.CharField("Special Instruction", max_length=256)
     products = models.ManyToManyField(Product)
+    updated_at = models.DateTimeField("Created at", auto_now=True)
+    class Meta:
+        db_table = "Orders"
