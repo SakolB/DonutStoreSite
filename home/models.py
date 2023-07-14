@@ -27,6 +27,17 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+
+
+class Order(models.Model):
+    order_date = models.DateTimeField("Order Date", auto_now_add=True)
+    special_instruction = models.CharField("Special Instruction", max_length=256)
+    products = models.ManyToManyField(Product)
+    updated_at = models.DateTimeField("Created at", auto_now=True)
+    class Meta:
+        db_table = "Orders"
+
 class Customer(models.Model):
     phone_regex = RegexValidator(
         regex = r'^\+?1?\d{9, 15}$',
@@ -37,17 +48,9 @@ class Customer(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=17)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    orders = models.ManyToManyField(Order)
     class Meta:
         db_table = "Customers"
 
     def __str___(self):
         return self.firstname + " " + self.last_name
-
-
-class Order(models.Model):
-    order_date = models.DateTimeField("Order Date", auto_now_add=True)
-    special_instruction = models.CharField("Special Instruction", max_length=256)
-    products = models.ManyToManyField(Product)
-    updated_at = models.DateTimeField("Created at", auto_now=True)
-    class Meta:
-        db_table = "Orders"
