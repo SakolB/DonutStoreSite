@@ -1,0 +1,19 @@
+.nav-bar {
+    width: 100%;
+    height: 20vh;
+    background-color: seashell;
+}
+.home-logo{
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    position: absolute;
+}
+.home-logo-container{
+    /* vertical-align: middle; */
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+}
