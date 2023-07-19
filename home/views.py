@@ -5,7 +5,10 @@ def home(request):
     return render(request, 'home/index.html', {})
 
 def cart(request):
-    return
+    return render(request, "home/cart.html", {})
+
+def about(request):
+    return render(request, "home/about.html", {})
 
 @login_required(login_url="/admin")
 def edit(request):
