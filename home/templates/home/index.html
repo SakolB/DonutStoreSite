@@ -1,23 +1,4 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header>
-        <nav class="nav-bar">
-            <a href="" class="home-logo-container">
-                <img src="{% static 'images/logo.png' %}" alt="Home logo" class="home-logo" />
-            </a>
-            <a href="">Home</a>
-            <a href="">About</a>
-            <a href="">Contact Us</a>
-            <a href="">Cart</a>
-        </nav>
-    </header>
-</body>
-</html>
+{% extends 'home/base.html' %}
+{% block content %}
+    <h1>This is a test</h1>
+{% endblock %}
