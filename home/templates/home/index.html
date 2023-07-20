@@ -1,4 +1,15 @@
 {% extends 'home/base.html' %}
 {% block content %}
-    <h1 class="h-screen">This is a test</h1>
-{% endblock %}
+    <h1>This is a test</h1>
+    <div class="grid grid-cols-3 gap-10 m-20">
+        {% for product in products %}
+        <div class="w-40 h-40">
+            <img src="{{ product.photo.url }}" alt="product image" class="rounded-xl">
+            <div>
+                <span>{{ product.name }} </span>
+                <span> {{ product.price }}$ </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}

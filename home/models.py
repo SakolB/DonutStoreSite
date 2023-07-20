@@ -30,7 +30,6 @@ class Product(models.Model):
 
 
 
-
 class Order(models.Model):
     order_date = models.DateTimeField("Order Date", auto_now_add=True)
     special_instruction = models.CharField("Special Instruction", max_length=256)
