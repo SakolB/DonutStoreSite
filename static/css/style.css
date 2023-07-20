@@ -1,19 +1,41 @@
-.nav-bar {
-    width: 100%;
-    height: 20vh;
-    background-color: seashell;
-}
-.home-logo{
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
-    position: absolute;
-}
-.home-logo-container{
-    /* vertical-align: middle; */
+.hamburger-btn {
+    width: 30px;
+    height: 20px;
     display: flex;
-    align-items: center;
-    position: relative;
-    width: 6rem;
-    height: 6rem;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+.hamburger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+}
+
+.mobileNav {
+    position: fixed;
+    top: 100px;
+    width:100vw;
+    height: 100vh;
+    padding: 20px;
+    transition: top 0.5s ease-in-out;
+}
+  
+.mobileNav a {
+    padding: 10px;
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.close {
+    transform: rotate(0deg);
+    transition: 0.5s;
+}
+
+.open {
+    transform: rotate(90deg);
+    transition: 0.5s;
 }
