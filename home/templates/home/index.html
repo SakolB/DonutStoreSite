@@ -1,15 +1,26 @@
 {% extends 'home/base.html' %}
 {% block content %}
-    <h1>This is a test</h1>
-    <div class="grid grid-cols-3 gap-10 m-20">
-        {% for product in products %}
-        <div class="w-40 h-40">
-            <img src="{{ product.photo.url }}" alt="product image" class="rounded-xl">
-            <div>
-                <span>{{ product.name }} </span>
-                <span> {{ product.price }}$ </span>
+    
+<div class="flex flex-col items-center mt-8 w-full">
+    {% for category in categories %}
+   
+        <section class="w-full">
+        
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 sm:gap-10 md:gap-40 mt-8 w-full overflow-x-hidden">
+                <h1 class="sm:col-span-2 md:col-span-3 text-bold text-5xl px-5 justify-center items-center">{{ category.name }}</h1>
+                {% for product in category.product_set.all %}
+                <div class="flex flex-col items-center">
+                    <img src="{{ product.photo.url }}" alt="product image" class="md:w-40 h-40 object-cover rounded-xl">
+                    <div class="mt-2 text-center">
+                        <span>{{ product.name }} </span>
+                        <span> {{ product.price }}$ </span>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-        </div>
-        {% endfor %}
-    </div>
+        
+        </section>
+   
+    {% endfor %} 
+</div>
     {% endblock %}

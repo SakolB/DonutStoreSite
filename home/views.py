@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product, ProductCategory
 from .forms import CreateProductForm
 
 # Create your views here.
 def home(request):
-    products = Product.objects.all()
-    return render(request, 'home/index.html', {'products' : products})
+    categories = ProductCategory.objects.filter(product__isnull=False).distinct()
+
+    return render(request, 'home/index.html', {'categories' : categories })
 
 def create(request):
     if request.method == 'POST':
