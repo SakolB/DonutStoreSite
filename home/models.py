@@ -21,6 +21,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
     updated_at = models.DateTimeField("Updated At", auto_now=True)
+    photo = models.ImageField(upload_to='images')
     class Meta:
         db_table = "Products"
 

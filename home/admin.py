@@ -4,10 +4,10 @@ from .models import ProductCategory, Product, Customer
 
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = [
-        ("Main Info", {"fields": ["name", "category", "price"]}),
+        ("Main Info", {"fields": ["name", "category", "price", "photo"]}),
     ]
     
-    list_display = ["id", "name", "price", "category", "created_at", "updated_at"]
+    list_display = ["id", "name", "price", "category", "created_at", "updated_at", "photo"]
     list_filter = ["id", "name", "price", "category", "created_at", "updated_at"]
     search_fields = ["name", "category__name"]
     ordering = ["id"]
