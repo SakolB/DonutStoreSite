@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <form method="POST">
+    {% csrf_token %}
+    <div class="flex flex-col items-center justify-center h-[80vh]">
+        <p>Are you sure you want to delete {{ product.name }}?</p>
+        <p>This action cannot be undone.</p>
+        <input type="submit" value="Delete" class="bg-red-600"/>
+    </div>
+    </form>
+{% endblock %}

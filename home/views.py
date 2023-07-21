@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, ProductCategory
-from .forms import CreateProductForm
+from .forms import ProductForm
+from django.views.generic import CreateView, UpdateView
+from django.views.generic.edit import DeleteView
 
 # Create your views here.
 def home(request):
@@ -9,16 +11,23 @@ def home(request):
 
     return render(request, 'home/index.html', {'categories' : categories })
 
-def create(request):
-    if request.method == 'POST':
-        form = CreateProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = CreateProductForm()
-    return render(request, 'home/create.html', {'form' : form})
+class ProductsCreateView(CreateView):
+    model = Product
+    success_url = '/'
+    form_class = ProductForm
+    template_name = 'home/form.html'
 
+class ProductsEditView(UpdateView):
+    model = Product
+    success_url ="/"
+    form_class = ProductForm
+    template_name = 'home/form.html'
+
+class ProductsDeleteView(DeleteView):
+    model = Product
+    success_url = "/"
+    template_name = 'home/delete.html'
+    
 def cart(request):
     return render(request, "home/cart.html", {})
 

@@ -6,14 +6,18 @@
    
         <section class="w-full">
         
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 sm:gap-10 md:gap-20 mt-8 w-full overflow-x-hidden">
-                <h1 class="sm:col-span-2 md:col-span-3 text-bold text-5xl px-10 bg-gray-100 h-40 sm:h-40 flex items-center">{{ category.name }}</h1>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-10 md:gap-20 mt-8 w-full overflow-x-hidden">
+                <h1 class="sm:col-span-2 md:col-span-3 lg:col-span-4 text-bold text-5xl px-10 bg-gray-100 h-40 sm:h-40 flex items-center">{{ category.name }}</h1>
                 {% for product in category.product_set.all %}
                 <div class="flex flex-row p-5 sm:flex-col items-center">
-                    <img src="{{ product.photo.url }}" alt="product image" class="md:w-40 h-40 object-cover rounded-xl">
+                    <img src="{{ product.photo.url }}" alt="product image" class="min-w-[180px] min-h-[180px] max-w-[180px] max-h-[180px] rounded-xl">
                     <div class="mt-2 text-center flex flex-col sm:flex-row justify-between w-full">
                         <span class="flex-auto">{{ product.name }} </span>
                         <span class="flex-auto"> {{ product.price }}$ </span>
+                    </div>
+                    <div class="text-center flex flex-row justify-stretch items-center w-40 h-8 mt-4">
+                        <a class="flex-auto flex bg-blue-500 w-15 h-full justify-center items-center rounded-sm shadow-md hover:bg-blue-400" href="{% url 'home:edit' pk=product.pk%}">Edit</a>
+                        <a class="flex-auto flex bg-red-600 w-15 h-full justify-center items-center rounded-sm shadow-md hover:bg-red-400 m-2" href="{% url 'home:delete' pk=product.pk%}">Delete</a> 
                     </div>
                 </div>
                 {% endfor %}
