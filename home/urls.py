@@ -11,4 +11,7 @@ urlpatterns = [
     path("<int:pk>/delete", views.ProductsDeleteView.as_view(), name="delete"),
     path("create/", views.ProductsCreateView.as_view(), name="create"),
     path('not_auth/', TemplateView.as_view(template_name='home/fail.html'), name='not_auth'),
+    path('login', views.LoginInterfaceView.as_view(), name='login'),
+    path('logout', views.LogoutInterfaceView.as_view(), name='logout'),
+    path('register', views.SignupView.as_view(), name='signup'),
 ]
