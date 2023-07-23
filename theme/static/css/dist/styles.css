@@ -855,6 +855,10 @@ select {
   width: 100%;
 }
 
+.w-\[100vh\] {
+  width: 100vh;
+}
+
 .min-w-\[120px\] {
   min-width: 120px;
 }
@@ -913,6 +917,22 @@ select {
 
 .justify-stretch {
   justify-content: stretch;
+}
+
+.justify-items-end {
+  justify-items: end;
+}
+
+.self-stretch {
+  align-self: stretch;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-clip {
+  overflow: clip;
 }
 
 .overflow-x-hidden {
@@ -975,6 +995,10 @@ select {
 
 .p-5 {
   padding: 1.25rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .px-10 {
@@ -1074,6 +1098,10 @@ select {
     grid-column: span 2 / span 2;
   }
 
+  .sm\:m-5 {
+    margin: 1.25rem;
+  }
+
   .sm\:block {
     display: block;
   }
@@ -1088,6 +1116,10 @@ select {
 
   .sm\:w-48 {
     width: 12rem;
+  }
+
+  .sm\:w-1\/6 {
+    width: 16.666667%;
   }
 
   .sm\:grid-cols-2 {
@@ -1106,12 +1138,28 @@ select {
     justify-content: flex-start;
   }
 
+  .sm\:justify-center {
+    justify-content: center;
+  }
+
   .sm\:justify-stretch {
     justify-content: stretch;
   }
 
+  .sm\:justify-items-stretch {
+    justify-items: stretch;
+  }
+
   .sm\:gap-10 {
     gap: 2.5rem;
+  }
+
+  .sm\:self-end {
+    align-self: flex-end;
+  }
+
+  .sm\:p-2 {
+    padding: 0.5rem;
   }
 }
 
