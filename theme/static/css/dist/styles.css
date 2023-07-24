@@ -847,16 +847,8 @@ select {
   width: 10rem;
 }
 
-.w-\[100vw\] {
-  width: 100vw;
-}
-
 .w-full {
   width: 100%;
-}
-
-.w-\[100vh\] {
-  width: 100vh;
 }
 
 .min-w-\[120px\] {
@@ -923,14 +915,6 @@ select {
   justify-items: end;
 }
 
-.self-stretch {
-  align-self: stretch;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
 .overflow-clip {
   overflow: clip;
 }
@@ -995,10 +979,6 @@ select {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-1 {
-  padding: 0.25rem;
 }
 
 .px-10 {
@@ -1098,10 +1078,6 @@ select {
     grid-column: span 2 / span 2;
   }
 
-  .sm\:m-5 {
-    margin: 1.25rem;
-  }
-
   .sm\:block {
     display: block;
   }
@@ -1114,12 +1090,12 @@ select {
     height: 2.5rem;
   }
 
-  .sm\:w-48 {
-    width: 12rem;
-  }
-
   .sm\:w-1\/6 {
     width: 16.666667%;
+  }
+
+  .sm\:w-48 {
+    width: 12rem;
   }
 
   .sm\:grid-cols-2 {
@@ -1132,10 +1108,6 @@ select {
 
   .sm\:flex-col {
     flex-direction: column;
-  }
-
-  .sm\:justify-start {
-    justify-content: flex-start;
   }
 
   .sm\:justify-center {
@@ -1152,14 +1124,6 @@ select {
 
   .sm\:gap-10 {
     gap: 2.5rem;
-  }
-
-  .sm\:self-end {
-    align-self: flex-end;
-  }
-
-  .sm\:p-2 {
-    padding: 0.5rem;
   }
 }
 
