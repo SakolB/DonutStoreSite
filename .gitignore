@@ -3,5 +3,5 @@ Pipfile
 Pipfile.lock
 
 readme.md
-*/__pycache__/
+**/__pycache__/
 theme/
