@@ -1,7 +1,6 @@
 .env
 Pipfile
 Pipfile.lock
-
 readme.md
-**/__pycache__/
 theme/
+**/__pycache__/

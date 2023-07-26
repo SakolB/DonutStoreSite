@@ -10,4 +10,3 @@ python magange.py migrate
 # Run tailwindcss and server
     python manage.py tailwind start
     python manage.py runserver
-
