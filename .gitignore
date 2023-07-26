@@ -1,5 +1,5 @@
 .env
 Pipfile
 Pipfile.lock
-theme/
+theme
 **/__pycache__/
