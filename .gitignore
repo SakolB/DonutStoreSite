@@ -1,5 +1,6 @@
 .env
 Pipfile
+Makefile
 Pipfile.lock
 theme/
 **/__pycache__/
