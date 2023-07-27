@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProductCategory, Product, Customer
+from .models import ProductCategory, Product, Profile
 from django.utils.html import format_html
 # Register your models here.
 
@@ -21,6 +21,17 @@ class ProductCategoryAdmin(admin.ModelAdmin):
     ordering = ["id"]
     list_display = ["id", "name", "created_at", "updated_at"]
     list_filter = ["id", "name", "created_at", "updated_at"]
+class ProfileAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ("Main Info", {"fields": ["first_name", "last_name", "phone_number", "profile_pic", "user", "orders"]})
+    ]
+    list_display = ["first_name", "last_name", "phone_number", "image_tag", "user", "created_at", "updated_at"]
+    list_filter = ["id", "first_name", "last_name", "phone_number", "user"]
+    search_fields = ["first_name", "last_name", "phone_number"]
+    ordering = ["id"]
+    def image_tag(self,obj):
+        return format_html('<img src="{0}" style="width: 45px; height:45px;" />'.format(obj.profile_pic.url))
 
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Profile, ProfileAdmin)
