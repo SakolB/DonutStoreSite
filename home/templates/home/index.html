@@ -31,6 +31,7 @@
           >
         </div>
         {% endif %}
+        <a href="{% url 'home:add_cart' product_id=product.pk %}" class="flex-auto flex bg-green-500 w-15 h-full justify-center items-center rounded-sm shadow-md hover:bg-green-400 m-2">Add to Cart</a>
       </div>
       {% endfor %}
     </div>

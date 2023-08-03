@@ -9,7 +9,7 @@ from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
-
+from decimal import Decimal
 
 def is_admin(user):
     return user.is_authenticated and user.is_superuser
@@ -101,7 +101,54 @@ class ProductsDeleteView(UserPassesTestMixin, DeleteView):
             return redirect('/login')
     
 def cart(request):
-    return render(request, "home/cart.html", {})
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total_price = Decimal(0)
+    for product_id, item_data in cart.items():
+        product = Product.objects.get(id = product_id) 
+        if product:
+            total_price += Decimal(item_data['price']) * item_data['quantity']
+            cart_items.append({'product': product, 'quantity': item_data['quantity']})
 
+    return render(request, 'home/cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+def add_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    if not product:
+        return redirect('product_not_found')
+
+    cart = request.session.get('cart', {})
+    cart_item = cart.get(str(product_id))
+    if cart_item:
+        # If the product is already in the cart, increment the quantity
+        cart_item['quantity'] += 1
+    else:
+        # If the product is not in the cart, add it with an initial quantity of 1
+        cart_item = {'quantity': 1, 'price': float(product.price)}  # Convert Decimal to float
+        cart[product_id] = cart_item
+
+    request.session['cart'] = cart
+    return redirect('/cart')
+
+def remove_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    cart_item = cart.get(str(product_id))
+    print(cart_item)
+    err_msg = ''
+    if cart_item:
+        if cart_item['quantity'] > 1 :
+            cart_item['quantity'] -= 1
+        else:
+            del cart[str(product_id)]
+    else:
+        err_msg = 'Items does not exist'
+    request.session['cart'] = cart
+    return redirect('/cart')
+
+def clear_cart(request):
+    cart = request.session.get('cart', {})
+    cart.clear()
+    request.session['cart'] = cart
+    return redirect('/cart')
 def about(request):
     return render(request, "home/about.html", {})
