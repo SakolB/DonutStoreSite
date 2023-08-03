@@ -62,7 +62,7 @@ class Profile(models.Model):
     last_name = models.CharField("Last Name", max_length=64)
     phone_number = PhoneNumberField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
-    profile_pic = models.ImageField(upload_to=user_profile_pic_path, blank=True, default=user_profile_pic_default)
+    profile_pic = models.ImageField(upload_to=user_profile_pic_path, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

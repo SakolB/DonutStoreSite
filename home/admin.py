@@ -29,8 +29,12 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ["id", "first_name", "last_name", "phone_number", "user", "email"]
     search_fields = ["first_name", "last_name", "phone_number"]
     ordering = ["id"]
-    def image_tag(self,obj):
-        return format_html('<img src="{0}" style="width: 45px; height:45px;" />'.format(obj.profile_pic.url))
+    # fix user image not upload properly, server error, exception handling if there's no images
+    def image_tag(self, obj):
+        if obj.profile_pic:
+            return format_html('<img src="{0}" style="width: 45px; height: 45px;" />'.format(obj.profile_pic.url))
+        else:
+            return "No Image"  # Provide a default message or a placeholder image
 
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
