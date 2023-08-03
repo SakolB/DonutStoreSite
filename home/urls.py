@@ -14,4 +14,7 @@ urlpatterns = [
     path('login', views.LoginInterfaceView.as_view(), name='login'),
     path('logout', views.LogoutInterfaceView.as_view(), name='logout'),
     path('register', views.SignupView.as_view(), name='signup'),
+    path('add_cart/<int:product_id>', views.add_cart, name='add_cart'),
+    path('remove_cart/<int:product_id>', views.remove_cart, name='remove_cart'),
+    path('clear_cart', views.clear_cart, name='clear_cart'),
 ]

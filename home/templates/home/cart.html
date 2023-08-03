@@ -1,0 +1,17 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<h1>Your Shopping Cart</h1>
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                {{ item.product.name }} - Quantity: {{ item.quantity }} - Price: ${{ item.product.price }}
+                <a href="{% url 'home:add_cart' product_id=item.product.pk %}" class="bg-green-500 hover:bg-green-400">Add</a>
+                <a href="{% url 'home:remove_cart' product_id=item.product.pk %}" class="bg-red-500 hover:bg-red-400">Remove</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Total Price: ${{ total_price }}</p>
+    <a href="" class="bg-blue-500 hover:bg-blue-400">Checkout</a>
+    <a href="{% url 'home:clear_cart' %}" class="bg-red-500 hover:bg-red-400">Clear Cart</a>
+{% endblock content %}
