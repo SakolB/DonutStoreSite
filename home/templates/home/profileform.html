@@ -2,7 +2,7 @@
 {% block content %}
 <div class="h-[85vh]">
 <div class="max-w-md mx-auto mt-8 p-4 bg-white rounded shadow-md">
-    <h1 class="text-lg text-center p-5">Create Profile</h1>
+    <h1 class="text-lg text-center p-5">{{ action }} Profile</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="flex items-center mb-4">

@@ -3,7 +3,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
-from .models import Product, ProductCategory
+from .models import Product, ProductCategory, Profile
 from .forms import ProductForm, ProfileForm
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
@@ -66,7 +66,8 @@ class LogoutInterfaceView(UserPassesTestMixin, LogoutView):
 class ProfileCreateView(UserPassesTestMixin, CreateView):
     form_class = ProfileForm
     success_url = '/'
-    template_name = 'home/createprofile.html'
+    template_name = 'home/profileform.html'
+    extra_context = {'action' : 'Create'}
     def test_func(self):
         return 'created_user_id' in self.request.session
     def handle_no_permission(self):
@@ -83,6 +84,22 @@ class ProfileCreateView(UserPassesTestMixin, CreateView):
         self.request.session.pop('created_user_id', None)      
         return super().form_valid(form)
 
+
+class ProfileEditView(UserPassesTestMixin, UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    success_url = '/'
+    template_name = 'home/profileform.html'
+    extra_context = {'action': 'Edit'}
+    def test_func(self):
+        profile = self.get_object()
+        return is_login(self.request.user) and self.request.user == profile.user
+    def handle_no_permission(self):
+        return redirect('/not_auth')
+    def get_queryset(self):
+        # Limit the queryset to profiles that belong to the currently logged-in user
+        return Profile.objects.filter(user=self.request.user)
+
 class ProductsCreateView(UserPassesTestMixin, CreateView):
     model = Product
     success_url = '/'
@@ -98,7 +115,7 @@ class ProductsCreateView(UserPassesTestMixin, CreateView):
         else:
             return redirect('/login')
 
-#products_create_view = create_admin_required(ProductsCreateView.as_view())
+
 class ProductsEditView(UserPassesTestMixin, UpdateView):
     model = Product
     success_url ="/"
