@@ -72,3 +72,19 @@ class Profile(models.Model):
 
     def __str___(self):
         return self.first_name + " " + self.last_name
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Check if the instance is being created for the first time
+            if self.profile_pic and self.profile_pic.name == user_profile_pic_default():
+                self.is_default_picture = True
+        else:
+            if not self.profile_pic:
+                self.profile_pic.name = user_profile_pic_default()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Check if the picture being deleted is the default picture
+        if self.profile_pic and self.profile_pic.name == user_profile_pic_default():
+            # Skip auto-cleanup for the default picture
+            kwargs['auto_clean'] = False
+        super().delete(*args, **kwargs)
