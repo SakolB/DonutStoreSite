@@ -17,4 +17,5 @@ urlpatterns = [
     path('add_cart/<int:product_id>', views.add_cart, name='add_cart'),
     path('remove_cart/<int:product_id>', views.remove_cart, name='remove_cart'),
     path('clear_cart', views.clear_cart, name='clear_cart'),
+    path('profile_create', views.ProfileCreateView.as_view(), name='profile_create'),
 ]

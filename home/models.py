@@ -65,7 +65,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to=user_profile_pic_path, blank=True, default=user_profile_pic_default)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     orders = models.ManyToManyField(Order, blank=True)
     class Meta:
         db_table = "Profile"
@@ -88,3 +88,5 @@ class Profile(models.Model):
             # Skip auto-cleanup for the default picture
             kwargs['auto_clean'] = False
         super().delete(*args, **kwargs)
+
+    

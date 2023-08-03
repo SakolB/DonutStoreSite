@@ -1,14 +1,15 @@
 from typing import Optional
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Product, ProductCategory
-from .forms import ProductForm
+from .forms import ProductForm, ProfileForm
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from decimal import Decimal
 
 def is_admin(user):
@@ -29,8 +30,15 @@ def home(request):
 class SignupView(UserPassesTestMixin, CreateView):
     form_class = UserCreationForm
     template_name = 'home/register.html'
-    success_url = '/'
+    success_url = '/profile_create'
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        user = form.save()
+        self.request.session['created_user_id'] = user.id
+        print(self.request.session.get('created_user_id', None))
+        return response
+        
     def test_func(self):
         return is_notlogin(self.request.user)
     
@@ -54,6 +62,26 @@ class LogoutInterfaceView(UserPassesTestMixin, LogoutView):
     
     def handle_no_permission(self):
         return redirect('/login')
+
+class ProfileCreateView(UserPassesTestMixin, CreateView):
+    form_class = ProfileForm
+    success_url = '/'
+    template_name = 'home/createprofile.html'
+    def test_func(self):
+        return 'created_user_id' in self.request.session
+    def handle_no_permission(self):
+        return redirect('/not_auth')
+    def form_valid(self, form):
+        print(self.request.session.get('created_user_id', None))
+        user_id = self.request.session.get('created_user_id', None)
+        if not user_id:
+            return redirect('index')
+        user = get_object_or_404(User, id=user_id)
+        profile = form.save(commit=False)
+        profile.user = user
+        profile.save()  
+        self.request.session.pop('created_user_id', None)      
+        return super().form_valid(form)
 
 class ProductsCreateView(UserPassesTestMixin, CreateView):
     model = Product

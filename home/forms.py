@@ -10,4 +10,4 @@ class ProductForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'phone_number', 'email', 'profile_pic']
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'profile_pic', 'user']
