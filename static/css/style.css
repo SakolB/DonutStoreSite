@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
 }
@@ -41,4 +42,8 @@
 .open {
     transform: rotate(90deg);
     transition: 0.5s;
+}
+
+.content {
+    background-image: url('../images/site_bg.png')
 }
