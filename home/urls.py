@@ -19,4 +19,6 @@ urlpatterns = [
     path('clear_cart', views.clear_cart, name='clear_cart'),
     path('profile_create', views.ProfileCreateView.as_view(), name='profile_create'),
     path('profile_edit/<int:pk>', views.ProfileEditView.as_view(), name='profile_edit'),
+    path('checkout', views.checkout, name='checkout'),
+    path('order_complete',TemplateView.as_view(template_name='home/order_complete.html'), name='order_complete'),
 ]

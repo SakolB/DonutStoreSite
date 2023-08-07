@@ -12,6 +12,6 @@
         {% endfor %}
     </ul>
     <p>Total Price: ${{ total_price }}</p>
-    <a href="" class="bg-blue-500 hover:bg-blue-400">Checkout</a>
+    <a href="{% url 'home:checkout' %}" class="bg-blue-500 hover:bg-blue-400">Checkout</a>
     <a href="{% url 'home:clear_cart' %}" class="bg-red-500 hover:bg-red-400">Clear Cart</a>
 {% endblock content %}

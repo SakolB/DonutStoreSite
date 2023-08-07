@@ -23,7 +23,7 @@ class ProductCategoryAdmin(admin.ModelAdmin):
     list_filter = ["id", "name", "created_at", "updated_at"]
 class ProfileAdmin(admin.ModelAdmin):
     fieldsets = [
-        ("Main Info", {"fields": ["first_name", "last_name", "phone_number", "email","profile_pic", "user", "orders"]})
+        ("Main Info", {"fields": ["first_name", "last_name", "phone_number", "email","profile_pic", "user"]})
     ]
     list_display = ["first_name", "last_name", "phone_number", "email", "image_tag", "user", "created_at", "updated_at"]
     list_filter = ["id", "first_name", "last_name", "phone_number", "user", "email"]

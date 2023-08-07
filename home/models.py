@@ -33,41 +33,7 @@ class ProductCategory(models.Model):
     
     def __str__(self):
         return self.name
-
-class Product(models.Model):
-    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-    name = models.CharField(max_length=48)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    created_at = models.DateTimeField("Created At", auto_now_add=True)
-    updated_at = models.DateTimeField("Updated At", auto_now=True)
-    photo = models.ImageField(upload_to='images')
-    class Meta:
-        db_table = "Products"
-
-    def __str__(self):
-        return self.name
-
-
-
-class Order(models.Model):
-    order_date = models.DateTimeField("Order Date", auto_now_add=True)
-    special_instruction = models.CharField("Special Instruction", max_length=256)
-    products = models.ManyToManyField(Product, through='ProductOrder')
-    updated_at = models.DateTimeField("Created at", auto_now=True)
     
-    class Meta:
-        db_table = "Orders"
-
-class ProductOrder(models.Model):
-    quantity = models.IntegerField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('product', 'order')
-        db_table = "ProductOrder"
-
-
 class Profile(models.Model):
     first_name = models.CharField("First Name",max_length=128)
     last_name = models.CharField("Last Name", max_length=64)
@@ -77,7 +43,6 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
-    orders = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)
     class Meta:
         db_table = "Profiles"
 
@@ -99,5 +64,43 @@ class Profile(models.Model):
             # Skip auto-cleanup for the default picture
             kwargs['auto_clean'] = False
         super().delete(*args, **kwargs)
+
+class Product(models.Model):
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
+    name = models.CharField(max_length=48)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+    updated_at = models.DateTimeField("Updated At", auto_now=True)
+    photo = models.ImageField(upload_to='images')
+    class Meta:
+        db_table = "Products"
+
+    def __str__(self):
+        return self.name
+
+
+
+class Order(models.Model):
+    order_date = models.DateTimeField("Order Date", auto_now_add=True)
+    special_instruction = models.CharField("Special Instruction", max_length=256)
+    products = models.ManyToManyField(Product, through='ProductOrder')
+    updated_at = models.DateTimeField("Created at", auto_now=True)
+    completed = models.BooleanField(default=False)
+    total_price = models.DecimalField("Total Price", decimal_places=2, max_digits=10, default=0)
+    profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
+    class Meta:
+        db_table = "Orders"
+
+class ProductOrder(models.Model):
+    quantity = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('product', 'order')
+        db_table = "ProductOrder"
+
+
+
 
     

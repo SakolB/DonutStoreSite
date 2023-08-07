@@ -3,7 +3,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
-from .models import Product, ProductCategory, Profile
+from .models import Product, ProductCategory, Profile, Order, ProductOrder
 from .forms import ProductForm, ProfileForm
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
@@ -144,6 +144,25 @@ class ProductsDeleteView(UserPassesTestMixin, DeleteView):
             return redirect('/not_auth')
         else:
             return redirect('/login')
+        
+def checkout(request):
+    cart = request.session.get('cart', {})
+    total_price = Decimal(0)
+    order = Order.objects.create()
+    order.special_instruction="blank"
+    for product_id, item_data in cart.items():
+        product = Product.objects.get(id = product_id) 
+        if product:
+            total_price += Decimal(item_data['price']) * item_data['quantity']
+            ProductOrder.objects.create(product=product, order=order, quantity=item_data['quantity'])
+    order.total_price = total_price
+    print(order.total_price)
+    user = request.user
+    if is_login(user):
+        profile = get_object_or_404(Profile, user=user)
+        order.profile = profile
+    order.save()
+    return redirect('/order_complete')
     
 def cart(request):
     cart = request.session.get('cart', {})
