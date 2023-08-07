@@ -52,10 +52,21 @@ class Product(models.Model):
 class Order(models.Model):
     order_date = models.DateTimeField("Order Date", auto_now_add=True)
     special_instruction = models.CharField("Special Instruction", max_length=256)
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, through='ProductOrder')
     updated_at = models.DateTimeField("Created at", auto_now=True)
+    
     class Meta:
         db_table = "Orders"
+
+class ProductOrder(models.Model):
+    quantity = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('product', 'order')
+        db_table = "ProductOrder"
+
 
 class Profile(models.Model):
     first_name = models.CharField("First Name",max_length=128)
@@ -66,9 +77,9 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
-    orders = models.ManyToManyField(Order, blank=True)
+    orders = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)
     class Meta:
-        db_table = "Profile"
+        db_table = "Profiles"
 
     def __str___(self):
         return self.first_name + " " + self.last_name
