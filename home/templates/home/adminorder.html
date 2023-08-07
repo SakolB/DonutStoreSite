@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<h1>Orders</h1>
+<table class="bg-slate-300 table-auto border-collapse border">
+    <thead>
+        <tr>
+            <th class="border p-2">Order Number</th>
+            <th class="border p-2">Order Detail</th>
+            <th class="border p-2">Customer Name</th>
+            <th class="border p-2">Order Status</th>
+            <th class="border p-2">Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for Order in Orders %}
+        <tr>
+            <td class="border p-2">{{ Order.id }}</td>
+            <td class="border p-2">
+                {% for product_order in Order.productorder_set.all%}
+                    <li>{{product_order.product.name}} x {{product_order.quantity}}</li>
+                {% endfor %}
+            </td>
+            <td class="border p-2">{{ Order.profile.first_name }} {{ Order.profile.last_name }}</td>
+            <td class="border p-2">
+                {% if Order.completed %}
+                    Completed
+                {% else %}
+                    In Progress
+                {% endif %}
+            </td>
+            <td class="border p-2">{{ Order.total_price }} $</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

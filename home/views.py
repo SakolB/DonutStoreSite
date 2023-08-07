@@ -1,15 +1,17 @@
-from typing import Optional
+from typing import Any, Optional
+from django.db.models.query import QuerySet
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Product, ProductCategory, Profile, Order, ProductOrder
 from .forms import ProductForm, ProfileForm
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils import timezone
 from decimal import Decimal
 
 def is_admin(user):
@@ -162,8 +164,28 @@ def checkout(request):
         profile = get_object_or_404(Profile, user=user)
         order.profile = profile
     order.save()
+    cart.clear
+    request.session['cart'] = cart
     return redirect('/order_complete')
+
+
+class AdminOrderView(UserPassesTestMixin, ListView):
+    model = Order
+    template_name = 'home/adminorder.html'
+    context_object_name = 'Orders'
+
+
+    def get_queryset(self):
+        yesterday = timezone.now() - timezone.timedelta(hours=24)
+        querySet = Order.objects.filter(order_date__gte=yesterday)
+        return querySet
+    def test_func(self):
+        return is_admin(self.request.user)
     
+    def handle_no_permission(self):
+        return redirect('/not_auth')
+
+
 def cart(request):
     cart = request.session.get('cart', {})
     cart_items = []
