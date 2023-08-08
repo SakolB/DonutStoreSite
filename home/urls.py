@@ -22,4 +22,5 @@ urlpatterns = [
     path('checkout', views.checkout, name='checkout'),
     path('order_complete',TemplateView.as_view(template_name='home/order_complete.html'), name='order_complete'),
     path('admin_order_view', views.AdminOrderView.as_view(), name='admin_order_view'),
+    path('profile', views.ProfileDetailView.as_view(), name='profile'),
 ]

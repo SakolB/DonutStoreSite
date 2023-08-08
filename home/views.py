@@ -1,4 +1,5 @@
 from typing import Any, Optional
+from django.db import models
 from django.db.models.query import QuerySet
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -6,7 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Product, ProductCategory, Profile, Order, ProductOrder
 from .forms import ProductForm, ProfileForm
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
@@ -86,6 +87,19 @@ class ProfileCreateView(UserPassesTestMixin, CreateView):
         self.request.session.pop('created_user_id', None)      
         return super().form_valid(form)
 
+class ProfileDetailView(UserPassesTestMixin, DetailView):
+    model = Profile
+    template_name = 'home/profile.html'
+    context_object_name = 'profile'
+
+    def get_object(self):
+        return self.request.user.profile
+
+    def test_func(self):
+        return is_login(self.request.user)
+    
+    def handle_no_permission(self):
+        return redirect('/not_auth')
 
 class ProfileEditView(UserPassesTestMixin, UpdateView):
     model = Profile
