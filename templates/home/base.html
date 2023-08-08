@@ -45,9 +45,9 @@
                 <div class="flex-auto hidden sm:w-1/6 sm:block text-center">
                     <a href="{% url 'home:logout' %}" class="text-gray-400 p-2 hover:text-black">Logout</a>
                 </div>
-                <div class="flex-auto flex w-1/3 sm:w-1/6 justify-end sm:justify-stretch">
+                <div class="flex-auto flex w-1/3 sm:w-1/6 justify-end sm:justify-center">
                     <a href="{% url "home:profile_edit" pk=user.profile.id %}" class="text-gray-400 p-2 hover:text-black h-full">
-                        <img src="{{ user.profile.profile_pic.url }}" alt="profile picture" class="w-full h-full">
+                        <img src="{{ user.profile.profile_pic.url }}" alt="profile picture" class="w-10 h-10 rounded-full">
 
                         {% comment %} <img src="{% static 'images/logo.png' %}" class="w-10 h-10 m-5 rounded-full" alt="Profile picture"> {% endcomment %}
                     </a>
