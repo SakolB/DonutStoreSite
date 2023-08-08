@@ -1,11 +1,14 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-<h1>Your Profile</h1>
-<h2>Name: {{ profile.first_name }} {{ profile.last_name }}</h2>
-<h2>Email: {{ profile.email }}</h2>
-<h3>Phone Number: {{ profile.phone_number}}</h3>
-<h4>Profile Pic:
-    <img src="{{profile.profile_pic.url}}" alt="Profile Picture" class="w-10 h-10">
-</h4>
+<div class="flex flex-col justify-center items-center">
+    <h1>Your Profile</h1>
+    <h2>Name: {{ profile.first_name }} {{ profile.last_name }}</h2>
+    <h2>Email: {{ profile.email }}</h2>
+    <h3>Phone Number: {{ profile.phone_number}}</h3>
+    <h4>Profile Pic: 
+        <img src="{{profile.profile_pic.url}}" alt="Profile Picture" class="w-10 h-10">
+    </h4>
+    <a class="bg-blue-500 hover:bg-blue-400 mt-2" href="{% url 'home:profile_edit' pk=profile.pk %}">Edit</a>
+</div>
 {% endblock %}
